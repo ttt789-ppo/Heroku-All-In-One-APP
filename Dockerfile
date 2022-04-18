@@ -10,7 +10,7 @@ RUN apk add --no-cache curl caddy jq aria2 bash findutils runit rclone apache2-u
     && wget -qO - https://github.com/bastienwirtz/homer/releases/latest/download/homer.zip | busybox unzip -qd /.aria2allinoneworkdir/homer - \
     && sed -i 's|6800|443|g' /.aria2allinoneworkdir/ariang/js/aria-ng-f1dd57abb9.min.js \
     && curl -fsSL https://raw.githubusercontent.com/wy580477/filebrowser-install/master/get.sh | bash \
-    && apk add --no-cache --virtual .build-deps gcc \
+    && apk add --no-cache --virtual .build-deps gcc musl-dev \
     && python3 -m pip install -U yt-dlp \
     && apk del .build-deps \
     && chmod +x /.aria2allinoneworkdir/service/*/run /.aria2allinoneworkdir/service/*/log/run /.aria2allinoneworkdir/aria2/*.sh /.aria2allinoneworkdir/*.sh \
