@@ -1,0 +1,16 @@
+#!/bin/bash
+
+sleep 60
+
+DATE=$(date +%H%M | sed 's/^0//g')
+while [ "${DATE}" != "${RESTART_TIME/:/}" ]; do
+  sleep 10
+done
+
+CONF=$(base64 /mnt/data/config/rclone.conf)
+if [ "${HEROKU_API_KEY}" != "" ]; then
+  curl -n -X PATCH https://api.heroku.com/apps/"${HEROKU_APP_NAME}"/config-vars \
+  -d '{"RCLONE_CONFIG_BASE64": "'"${CONF}"'"}' \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/vnd.heroku+json; version=3" -H "Authorization: Bearer "${HEROKU_API_KEY}""
+fi
